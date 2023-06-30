@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "WebGeo extension",
     "version": "1.0.0",
-    "description": "Navigate from and to various mapping websites (google maps, openstreetmap, geoportail, nullschool, blitzortung, webgeo) using WebGeo as hub to navigate from one to another.",
+    "description": "Navigate from and to various mapping websites using WebGeo as hub to navigate from one to another.",
     "icons": {
         "16": "images/earth-16.png",
         "32": "images/earth-32.png",
@@ -11,8 +11,7 @@
     },
     "author": "gissehel",
     "permissions": [
-        "activeTab", 
-        "scripting"
+        
     ],
     "content_scripts": [
         {
