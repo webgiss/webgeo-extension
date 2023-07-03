@@ -1,6 +1,6 @@
 # webgeo extension
 
-**webgeo extension** is an extension to navigate from and to various mapping websites (google maps, openstreetmap, geoportail, nullschool, blitzortung, webgeo) using WebGeo ( https://webgiss.github.io/webgeo/ ) as hub to navigate from one to another.
+**webgeo extension** is an extension to navigate from and to various mapping websites (google maps, openstreetmap, bing maps, geoportail, nullschool, blitzortung, webgeo) using WebGeo ( https://webgiss.github.io/webgeo/ ) as hub to navigate from one to another.
 
 Links:
 * **project** : https://github.com/webgiss/webgeo-extension
@@ -13,6 +13,10 @@ Links:
 ## on OpenStreetMap
 
 ![](doc/02_on_osm.jpg)
+
+## on BingMaps
+
+![](doc/07_on_bingmaps.jpg)
 
 ## on Geoportail
 
