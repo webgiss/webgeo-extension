@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "WebGeo extension",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Navigate from and to various mapping websites using WebGeo as hub to navigate from one to another.",
     "icons": {
         "16": "images/earth-16.png",
@@ -771,6 +771,8 @@
 
                 "https://bing.com/maps",
                 "https://www.bing.com/maps",
+                "https://bing.com/maps?*",
+                "https://www.bing.com/maps?*",
                 "https://earth.nullschool.net/*",
                 "https://classic.nullschool.net/*",
                 "https://openstreetmap.org/*",
