@@ -773,6 +773,8 @@
                 "https://www.bing.com/maps",
                 "https://bing.com/maps?*",
                 "https://www.bing.com/maps?*",
+                "https://windy.com/*",
+                "https://www.windy.com/*",
                 "https://earth.nullschool.net/*",
                 "https://classic.nullschool.net/*",
                 "https://openstreetmap.org/*",
