@@ -4,7 +4,7 @@
 
 Links:
 * **project** : https://github.com/webgiss/webgeo-extension
-* **chrome store** : Not yet accepted
+* **chrome store** : https://chrome.google.com/webstore/detail/webgeo-extension/ojikoelljdnmbafdfoeiijihmhkaomjj
 
 ## on Google maps
 
