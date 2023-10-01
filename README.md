@@ -22,6 +22,10 @@ Links:
 
 ![](doc/03_on_geoportail.jpg)
 
+## on Windy
+
+![](doc/08_on_windy.jpg)
+
 ## on Nullschool
 
 ![](doc/04_on_nullschool.jpg)
