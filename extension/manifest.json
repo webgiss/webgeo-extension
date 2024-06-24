@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "WebGeo extension",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Navigate from and to various mapping websites using WebGeo as hub to navigate from one to another.",
     "icons": {
         "16": "images/earth-16.png",

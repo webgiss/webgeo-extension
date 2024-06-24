@@ -87,33 +87,32 @@ const registerClickListener = (eventTarget, callback, options) => {
 }
 
 /**
- * Add a DOMNodeInserted on the document. 
+ * Call the callback when the document change
  * Handle the fact that the callback can't be called while aleady being called (no stackoverflow). 
  * Use the register pattern thus return the unregister function as a result
- * @param {EventListener} callback 
+ * @param {()=>()} callback 
  * @return {()=>{}} The unregister function
  */
-const registerDomNodeInserted = (callback) => {
-    let nodeChangeInProgress = false
+const registerDomNodeMutated = (callback) => {
+    let callbackInProgress = false
 
-    /** @type{EventListener} */
-    const onNodeChanged = (e) => {
-        if (!nodeChangeInProgress) {
-            nodeChangeInProgress = true
-            callback(e)
-            nodeChangeInProgress = false
+    const action = () => {
+        if (!callbackInProgress) {
+            callbackInProgress = true
+            callback()
+            callbackInProgress = false
         }
+    }
 
-    }
-    document.documentElement.addEventListener('DOMNodeInserted', onNodeChanged, false);
-    onNodeChanged()
-    return () => {
-        document.documentElement.removeEventListener('DOMNodeInserted', onNodeChanged, false);
-    }
+    const mutationObserver = new MutationObserver((mutationsList, observer) => { action() });
+    action()
+    mutationObserver.observe(document.documentElement, { childList: true, subtree: true });
+
+    return () => mutationObserver.disconnect()
 }
 
 /**
- * Add a DOMNodeInserted on the document. 
+ * Call the callback once per element provided by the elementProvider when the document change
  * Handle the fact that the callback can't be called while aleady being called (no stackoverflow). 
  * Use the register pattern thus return the unregister function as a result
  * 
@@ -122,10 +121,10 @@ const registerDomNodeInserted = (callback) => {
  * @param {()=>[HTMLElement]} elementProvider 
  * @param {(element: HTMLElement)=>{}} callback 
  */
-const registerDomNodeInsertedUnique = (elementProvider, callback) => {
+const registerDomNodeMutatedUnique = (elementProvider, callback) => {
     const domNodesHandled = new Set()
 
-    return registerDomNodeInserted(() => {
+    return registerDomNodeMutated(() => {
         for (let element of elementProvider()) {
             if (!domNodesHandled.has(element)) {
                 domNodesHandled.add(element)
@@ -220,7 +219,7 @@ const checkNullschool = () => document.location.href.startsWith('https://earth.n
 const checkWindy = () => document.location.href.startsWith('https://www.windy.com/') || document.location.href.startsWith('https://windy.com/')
 
 if (checkGoogle()) {
-    registerDomNodeInsertedUnique(() => document.querySelectorAll('[data-ogsr-up]'), (panel) => {
+    registerDomNodeMutatedUnique(() => document.querySelectorAll('[data-ogsr-up]'), (panel) => {
         const firstLink = panel?.children?.[0]?.children?.[0];
         if (firstLink) {
             createElementExtended('a', {
@@ -304,7 +303,7 @@ if (checkOpenStreetMap()) {
         ],
     })
 
-    registerDomNodeInsertedUnique(() => document.querySelectorAll('nav.secondary'), (panel) => {
+    registerDomNodeMutatedUnique(() => document.querySelectorAll('nav.secondary'), (panel) => {
         const subpanel = panel.children[0];
         const firstLink = subpanel.children[0];
         if (firstLink) {
@@ -320,7 +319,7 @@ if (checkOpenStreetMap()) {
 }
 
 if (checkBingMap()) {
-    registerDomNodeInsertedUnique(() => document.querySelectorAll('.top-right.subcontrol-container'), (container) => {
+    registerDomNodeMutatedUnique(() => document.querySelectorAll('.top-right.subcontrol-container'), (container) => {
         if (container.querySelectorAll('[aria-label="Pitch Control"]').length === 0) {
             return false
         }
@@ -360,7 +359,7 @@ if (checkBingMap()) {
 }
 
 if (checkGeoportail()) {
-    registerDomNodeInsertedUnique(() => document.querySelectorAll('#reverse-geocoding-coords'), (coords) => {
+    registerDomNodeMutatedUnique(() => document.querySelectorAll('#reverse-geocoding-coords'), (coords) => {
         const parent = coords?.parentElement;
         if (parent) {
             createElementExtended('div', {
@@ -413,7 +412,7 @@ if (checkGeoportail()) {
 }
 
 if (checkBlitzortung()) {
-    registerDomNodeInsertedUnique(() => document.querySelectorAll('#MenuButtonDiv'), (menuBase) => {
+    registerDomNodeMutatedUnique(() => document.querySelectorAll('#MenuButtonDiv'), (menuBase) => {
         createElementExtended('a', {
             attributes: {
                 href: '#',
@@ -487,7 +486,7 @@ if (checkNullschool()) {
         ],
     })
 
-    registerDomNodeInsertedUnique(() => document.querySelectorAll('h1'), (titleBase) => {
+    registerDomNodeMutatedUnique(() => document.querySelectorAll('h1'), (titleBase) => {
         const parent = titleBase.parentElement;
         if (parent) {
             parent.append(title);
@@ -500,7 +499,7 @@ if (checkNullschool()) {
 }
 
 if (checkWindy()) {
-    registerDomNodeInsertedUnique(() => [...document.querySelectorAll('#overlay')], (overlay) => {
+    registerDomNodeMutatedUnique(() => [...document.querySelectorAll('#overlay')], (overlay) => {
         const toggleOverlays = overlay.querySelector('[data-do=toggleOverlays]')
         if (!toggleOverlays) {
             return false
